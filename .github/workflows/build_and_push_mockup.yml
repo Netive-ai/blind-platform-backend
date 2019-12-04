@@ -1,0 +1,53 @@
+name: Build and Push to GCP Registry
+
+on:
+  push:
+    branches:
+    - 'mockup/**'
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+  IMAGE: netive-platform-backend-mockup
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt-get install python-setuptools
+        pip install wheel
+        pip install pyopenssl
+
+    - name: Checkout repository
+      uses: actions/checkout@master
+
+    # Setup gcloud CLI
+    - name: Install GCP CLI
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '270.0.0'
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
+        
+    - name  : Configure docker to use GCP CLI
+      run: |
+        gcloud auth configure-docker
+        
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/releases/})"
+      id: extract_branch
+      
+    # Build the Docker image
+    - name: Build docker image
+      run: | 
+        docker build -t "gcr.io/$GKE_PROJECT/$IMAGE:${{ steps.extract_branch.outputs.branch }}" .
+
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |
+        docker push gcr.io/$GKE_PROJECT/$IMAGE:${{ steps.extract_branch.outputs.branch }}
