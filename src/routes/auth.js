@@ -1,6 +1,6 @@
 /*
 
-Mocking for user authentificatioon
+Routes for user authentificatioon
 
 */
 

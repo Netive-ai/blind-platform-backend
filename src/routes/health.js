@@ -1,6 +1,6 @@
 /*
 
-    Mocking of routes to check API status
+    Routes to check API status
 
 */
 

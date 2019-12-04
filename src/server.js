@@ -1,6 +1,6 @@
 /*
 
-Mock for Netive platform backend
+Netive platform backend
 
 */
 
