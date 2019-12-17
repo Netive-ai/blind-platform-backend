@@ -1,9 +1,7 @@
 ![](.github/banner.png)
 
-# Netive Platform Backend
+# Blind Platform Backend
 
-This repository contains the backend source code for Netive showcase website
+This repository contains the backend source code for Blind showcase website
 
 ## Getting started
-
-The Netive's backend use **NodeJS** and **ExpressJS**

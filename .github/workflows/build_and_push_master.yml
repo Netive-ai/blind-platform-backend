@@ -10,7 +10,7 @@ env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
-  IMAGE: netive-platform-backend
+  IMAGE: blind-platform-backend
 
 jobs:
   setup-build-publish-deploy:
@@ -29,7 +29,7 @@ jobs:
         service_account_key: ${{ secrets.GKE_KEY }}
 
     # Configure docker to use the gcloud command-line tool as a credential helper
-    - run: |
+    - run:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
