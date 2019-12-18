@@ -1,4 +1,4 @@
-module github.com/jackline
+module github.com/blind-platform
 
 go 1.13
 

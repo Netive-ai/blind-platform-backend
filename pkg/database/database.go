@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"github.com/jackline/pkg/util"
+	"github.com/blind-platform/pkg/util"
 )
 
 func CreateTableAccount(DB *sql.DB) {

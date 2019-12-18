@@ -3,7 +3,7 @@ package conf
 import (
 	"encoding/json"
 	"io/ioutil"
-	"github.com/jackline/pkg/util"
+	"github.com/blind-platform/pkg/util"
 )
 
 type AwsDB struct {
