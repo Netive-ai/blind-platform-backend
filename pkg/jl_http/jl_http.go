@@ -1,8 +1,8 @@
 package jl_http
 
 import (
-	"github.com/jackline/pkg/auth"
-	typ "github.com/jackline/pkg/type"
+	"github.com/blind-platform/pkg/auth"
+	typ "github.com/blind-platform/pkg/type"
 	"log"
 	"net/http"
 )

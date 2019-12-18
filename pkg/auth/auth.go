@@ -3,7 +3,7 @@ package auth
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	typ "github.com/jackline/pkg/type"
+	typ "github.com/blind-platform/pkg/type"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"time"
