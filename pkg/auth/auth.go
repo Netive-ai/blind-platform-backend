@@ -1,15 +1,15 @@
-package main
+package auth
 
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	typ "github.com/jackline/pkg/type"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 )
 
-
-// Define some custom types were going to use within our tokens
+// custom types were going to use within our tokens
 type CustomerInfo struct {
 	Name string
 	Kind string
@@ -21,11 +21,11 @@ type CustomClaim struct {
 	CustomerInfo
 }
 
-func signUp(w http.ResponseWriter, r *http.Request) {
+func SignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/jwt")
 }
 
-func createToken(user string) (string, error) {
+func createToken(user string, rsa typ.RSA) (string, error) {
 	// create a signer for rsa 256
 	t := jwt.New(jwt.GetSigningMethod("RS256"))
 
@@ -37,11 +37,11 @@ func createToken(user string) (string, error) {
 		"level1",
 		CustomerInfo{user, "human"},
 	}
-	return t.SignedString(gHandlers.RSA.Private)
+	return t.SignedString(rsa.Private)
 }
 
 // reads the form values, checks them and creates the token
-func signIn(w http.ResponseWriter, r *http.Request) {
+func SignIn(w http.ResponseWriter, r *http.Request, rsa typ.RSA) {
 	user := r.FormValue("user")
 	pass := r.FormValue("pass")
 
@@ -52,7 +52,7 @@ func signIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Wrong info")
 		return
 	}
-	tokenString, err := createToken(user)
+	tokenString, err := createToken(user, rsa)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintln(w, "Sorry, error while Signing Token!")
@@ -65,11 +65,11 @@ func signIn(w http.ResponseWriter, r *http.Request) {
 }
 
 // only accessible with a valid token
-func restrictedHandler(w http.ResponseWriter, r *http.Request) {
+func RestrictedHandler(w http.ResponseWriter, r *http.Request, rsa typ.RSA) {
 	if r.Header["Bearer"] != nil {
 		// Get token from request
 		token, err := jwt.ParseWithClaims(r.Header["Bearer"][0], &CustomClaim{}, func(token *jwt.Token) (interface{}, error) {
-			return gHandlers.RSA.Public, nil
+			return rsa.Public, nil
 		})
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)

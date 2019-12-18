@@ -1,4 +1,4 @@
-module github.com/blind/blind-platform-backend/client
+module github.com/jackline
 
 go 1.13
 
