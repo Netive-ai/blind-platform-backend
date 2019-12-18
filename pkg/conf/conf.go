@@ -1,12 +1,12 @@
-package main
+package conf
 
 import (
 	"encoding/json"
 	"io/ioutil"
+	"github.com/jackline/pkg/util"
 )
 
-
-type ConfAwsDB struct {
+type AwsDB struct {
 	User		string `json:"User"`
 	Password	string `json:"Password"`
 	Endpoint	string `json:"Endpoint"`
@@ -14,23 +14,22 @@ type ConfAwsDB struct {
 	Region		string `json:"Region"`
 }
 
-type ConfRSA struct {
+type RSA struct {
 	PathPrivate		string `json:"PathPrivate"`
 	PathPublic		string `json:"PathPublic"`
 }
 
 type Conf struct {
-	AwsDB	ConfAwsDB	`json:"AwsDB"`
-	RSA		ConfRSA		`json:"RSA"`
+	AwsDB	AwsDB	`json:"AwsDB"`
+	RSA		RSA		`json:"RSA"`
 }
 
-func loadConf() (Conf) {
+func Load() (Conf) {
 	var conf Conf
 
-	data, err := ioutil.ReadFile("conf/conf.json")
-	fatal(err)
-
+	data, err := ioutil.ReadFile("pkg/conf/sample/conf.json")
+	util.Fatal(err)
 	err = json.Unmarshal(data, &conf)
-	fatal(err)
+	util.Fatal(err)
 	return conf
 }

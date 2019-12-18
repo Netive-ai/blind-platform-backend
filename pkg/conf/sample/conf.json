@@ -1,0 +1,13 @@
+{
+  "AwsDB" : {
+    "User": "#",
+    "Password": "#",
+    "Endpoint": "#.rds.amazonaws.com",
+    "DBName": "postgres",
+    "Region": "us-east-1f"
+  },
+  "RSA" : {
+    "PathPrivate" : "$PATH/pkg/auth/keys/sample/private_key.pem",
+    "PathPublic" : "$PATH/pkg/auth/keys/sample/public_key.pem"
+  }
+}

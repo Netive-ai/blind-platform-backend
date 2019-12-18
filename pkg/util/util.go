@@ -1,10 +1,10 @@
-package main
+package util
 
 import (
 	log "github.com/sirupsen/logrus"
 )
 
-func fatal(err error, level ...int) {
+func Fatal(err error, level ...int) {
 	if err != nil {
 		if len(level) == 0 || level[0] == 0  {
 			panic(err)

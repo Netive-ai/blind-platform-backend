@@ -1,11 +1,10 @@
-package main
+package typ
 
 import (
 	"crypto/rsa"
 	"database/sql"
 	"github.com/gorilla/mux"
 )
-
 
 /**
 ** OPERATION RELATED STRUCTURES
