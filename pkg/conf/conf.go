@@ -27,7 +27,7 @@ type Conf struct {
 func Load() (Conf) {
 	var conf Conf
 
-	data, err := ioutil.ReadFile("pkg/conf/sample/conf.json")
+	data, err := ioutil.ReadFile("cfg/conf.json")
 	util.Fatal(err)
 	err = json.Unmarshal(data, &conf)
 	util.Fatal(err)

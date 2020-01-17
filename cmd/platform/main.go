@@ -3,13 +3,12 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gorilla/mux"
 	"github.com/blind-platform/pkg/conf"
-	"github.com/blind-platform/pkg/database"
 	jlh "github.com/blind-platform/pkg/jl_http"
 	"github.com/blind-platform/pkg/type"
 	"github.com/blind-platform/pkg/util"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"io/ioutil"
 )
@@ -28,7 +27,6 @@ func Connect(handlers typ.Handlers, conf conf.Conf) {
 	util.Fatal(err)
 	err = handlers.DB.Ping()
 	util.Fatal(err)
-	database.CreateTableAccount(handlers.DB)
 }
 
 // read the key files before starting http handlers

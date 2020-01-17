@@ -1,6 +1,7 @@
 package jl_http
 
 import (
+	"fmt"
 	"github.com/blind-platform/pkg/auth"
 	typ "github.com/blind-platform/pkg/type"
 	"log"
@@ -14,6 +15,6 @@ func HandleRequests(handler *typ.Handlers) {
 	handler.Router.HandleFunc("/api/auth/restrict", func(w http.ResponseWriter, r *http.Request) {
 		auth.RestrictedHandler(w, r, handler.RSA) }).Methods("POST")
 
-
-	log.Fatal(http.ListenAndServe("localhost:8001", handler.Router))
+	fmt.Println("listen starting...")
+	log.Fatal(http.ListenAndServe(":8001", handler.Router))
 }
