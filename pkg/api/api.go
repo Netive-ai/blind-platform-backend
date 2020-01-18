@@ -1,8 +1,8 @@
-package jl_http
+package api
 
 import (
 	"fmt"
-	"github.com/blind-platform/pkg/auth"
+	"github.com/blind-platform/pkg/api/auth"
 	typ "github.com/blind-platform/pkg/type"
 	"log"
 	"net/http"

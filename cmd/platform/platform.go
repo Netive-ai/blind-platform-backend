@@ -3,8 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/blind-platform/pkg/api"
 	"github.com/blind-platform/pkg/conf"
-	jlh "github.com/blind-platform/pkg/jl_http"
 	"github.com/blind-platform/pkg/type"
 	"github.com/blind-platform/pkg/util"
 	"github.com/dgrijalva/jwt-go"
@@ -13,7 +13,7 @@ import (
 	"io/ioutil"
 )
 
-func Connect(handlers typ.Handlers, conf conf.Conf) {
+func connect(handlers *typ.Handlers, conf conf.Conf) {
 
 	var err error
 
@@ -30,7 +30,7 @@ func Connect(handlers typ.Handlers, conf conf.Conf) {
 }
 
 // read the key files before starting http handlers
-func my_init() (typ.Handlers) {
+func myInit() (typ.Handlers) {
 	var handlers typ.Handlers
 	conf := conf.Load()
 	// INIT Router
@@ -45,13 +45,11 @@ func my_init() (typ.Handlers) {
 	handlers.RSA.Public, err = jwt.ParseRSAPublicKeyFromPEM(verifyBytes)
 	util.Fatal(err)
 	// INIT DB
-	Connect(handlers, conf)
+	connect(&handlers, conf)
 	return handlers
 }
 
 func main() {
-	handlers := my_init()
-
-	jlh.HandleRequests(&handlers)
-	defer handlers.DB.Close()
+	handlers := myInit()
+	api.HandleRequests(&handlers)
 }

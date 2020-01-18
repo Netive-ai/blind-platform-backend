@@ -23,6 +23,16 @@ type CustomClaim struct {
 
 func SignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/jwt")
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+
+	if len(username) == 0 || len(password) == 0 {
+		//w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, "missing username or password", http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	return
 }
 
 func createToken(user string, rsa typ.RSA) (string, error) {
@@ -42,17 +52,16 @@ func createToken(user string, rsa typ.RSA) (string, error) {
 
 // reads the form values, checks them and creates the token
 func SignIn(w http.ResponseWriter, r *http.Request, rsa typ.RSA) {
-	user := r.FormValue("user")
-	pass := r.FormValue("pass")
+	username := r.FormValue("username")
+	password := r.FormValue("password")
 
-	log.Printf("Authenticate: user[%s] pass[%s]\n", user, pass)
 	// check values
-	if user != "test" || pass != "known" {
+	if username != "test" || password != "known" {
 		w.WriteHeader(http.StatusForbidden)
 		fmt.Fprintln(w, "Wrong info")
 		return
 	}
-	tokenString, err := createToken(user, rsa)
+	tokenString, err := createToken(username, rsa)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintln(w, "Sorry, error while Signing Token!")
