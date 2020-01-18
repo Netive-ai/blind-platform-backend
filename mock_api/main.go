@@ -53,6 +53,8 @@ func checkFile(r *http.Request) (bool, string, string) {
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r)
+
 	fmt.Println("File Upload Endpoint Hit")
 
 	r.ParseMultipartForm(20 << 20)
