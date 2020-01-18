@@ -2,8 +2,8 @@ package conf
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"github.com/blind-platform/pkg/util"
+	"io/ioutil"
 )
 
 type AwsDB struct {
@@ -23,6 +23,7 @@ type Conf struct {
 	AwsDB	AwsDB	`json:"AwsDB"`
 	RSA		RSA		`json:"RSA"`
 }
+
 
 func Load() (Conf) {
 	var conf Conf

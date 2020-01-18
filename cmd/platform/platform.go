@@ -30,7 +30,7 @@ func connect(handlers *typ.Handlers, conf conf.Conf) {
 }
 
 // read the key files before starting http handlers
-func myInit() (typ.Handlers) {
+func MyInit() (typ.Handlers) {
 	var handlers typ.Handlers
 	conf := conf.Load()
 	// INIT Router
@@ -50,6 +50,6 @@ func myInit() (typ.Handlers) {
 }
 
 func main() {
-	handlers := myInit()
+	handlers := MyInit()
 	api.HandleRequests(&handlers)
 }

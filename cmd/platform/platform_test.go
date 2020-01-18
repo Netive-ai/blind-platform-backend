@@ -1,13 +1,15 @@
-package main
+package main_test
 
 import (
-	"github.com/blind-platform/pkg/auth"
+	"github.com/blind-platform/cmd/platform"
+	"github.com/blind-platform/pkg/api/auth"
 	log "github.com/sirupsen/logrus"
 	"testing"
 )
 
+
 func TestInit(t *testing.T) {
-	handler := myInit()
+	handler := main.MyInit()
 	result := handler.Router.HandleFunc("/api/auth/signup", auth.SignUp).Methods("POST").GetError()
 	if result != nil {
 		t.Error("Router not loaded")
