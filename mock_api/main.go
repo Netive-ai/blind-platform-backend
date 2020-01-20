@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"strconv"
 	"github.com/google/uuid"
-	"github.com/rs/cors"
 )
 
 func fallHandler(filename string) (int, error) {
@@ -54,9 +52,6 @@ func checkFile(r *http.Request) (bool, string, string) {
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 	fmt.Println(r)
 
 	fmt.Println("File Upload Endpoint Hit")
@@ -95,16 +90,19 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func Cors(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=ascii")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers","Content-Type,access-control-allow-origin, access-control-allow-headers")
+	w.Write([]byte("Hello, World!"))
+}
+
+
 func main() {
+	router := http.NewServeMux()
 
-	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"}, // All origins
-		AllowedMethods: []string{"POST"}, // Allowing only get, just an example
-	})
-	router := mux.NewRouter()
-
-	router.HandleFunc("/api/mock/uploadfile", UploadFile).Methods("POST")
-	fmt.Println("listen starting...")
-	log.Fatal(http.ListenAndServe(":8001", c.Handler(router)))
+	router.HandleFunc("/api/mock/uploadfile",UploadFile)
+	fmt.Println("list and serve ...")
+	log.Fatal(http.ListenAndServe(":8001", router))
 
 }
