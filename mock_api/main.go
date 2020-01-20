@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"github.com/google/uuid"
+	"github.com/rs/cors"
 )
 
 func fallHandler(filename string) (int, error) {
@@ -92,10 +93,15 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"}, // All origins
+		AllowedMethods: []string{"POST"}, // Allowing only get, just an example
+	})
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/mock/uploadfile", UploadFile).Methods("POST")
 	fmt.Println("listen starting...")
-	log.Fatal(http.ListenAndServe(":8001", router))
+	log.Fatal(http.ListenAndServe(":8001", c.Handler(router)))
 
 }
