@@ -54,6 +54,9 @@ func checkFile(r *http.Request) (bool, string, string) {
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	fmt.Println(r)
 
 	fmt.Println("File Upload Endpoint Hit")
