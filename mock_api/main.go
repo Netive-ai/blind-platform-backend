@@ -52,6 +52,11 @@ func checkFile(r *http.Request) (bool, string, string) {
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/html; charset=ascii")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers","Content-Type,access-control-allow-origin, access-control-allow-headers")
+
 	fmt.Println(r)
 
 	fmt.Println("File Upload Endpoint Hit")
@@ -89,14 +94,6 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
-func Cors(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=ascii")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers","Content-Type,access-control-allow-origin, access-control-allow-headers")
-	w.Write([]byte("Hello, World!"))
-}
-
 
 func main() {
 	router := http.NewServeMux()
