@@ -16,10 +16,11 @@ async function patientMiddleware(req, res, next) {
 }
 
 const uploadMiddleware = (patientId) => {
+    const path = 'public/' + patientId;
     const storageOptions = multer.diskStorage({
-        destination: async (_, __, next) => {
-            const path = 'public/' + patientId;
-            fs.mkdir(path, (dir, err) => next(null, path));
+        destination: (_, __, next) => {
+            fs.mkdirSync(path);
+            next(null, path);
         },
         filename: (_, file, next) => next(null, uuid() + path.extname(file.originalname))
     });
