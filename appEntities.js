@@ -49,9 +49,9 @@ class Vaccine {
 //diagnostic: string
 //details: string
 class Examination {
-    constructor (name, doctor, date, attachment, diagnostic, details)
+    constructor (type, doctor, date, attachment, diagnostic, details)
     {
-        this.name = name;
+        this.type = type;
         this.doctor = doctor;
         this.date = date;
         this.attachment = attachment;
