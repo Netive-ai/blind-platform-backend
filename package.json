@@ -1,0 +1,25 @@
+{
+  "name": "blind-platform-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "mongodb": "^3.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blind-ai/blind-platform-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blind-ai/blind-platform-backend/issues"
+  },
+  "homepage": "https://github.com/Blind-ai/blind-platform-backend#readme"
+}

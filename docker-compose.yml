@@ -1,0 +1,18 @@
+# Inspired by https://docs.docker.com/compose/django/
+version: '3.4'
+
+services:
+  db:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_DATABASE: medical-platform
+
+  api:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
