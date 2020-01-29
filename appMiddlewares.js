@@ -19,7 +19,8 @@ const uploadMiddleware = (patientId) => {
     const storePath = 'public/' + patientId;
     const storageOptions = multer.diskStorage({
         destination: (_, __, next) => {
-            fs.mkdirSync(storePath);
+            if (fs.existsSync(storePath) == false)
+                fs.mkdirSync(storePath);
             next(null, storePath);
         },
         filename: (_, file, next) => next(null, uuid() + path.extname(file.originalname))
