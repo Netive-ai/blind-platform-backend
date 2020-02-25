@@ -16,12 +16,17 @@ async function addExamination(req, res) {
     const date = Date.now();
     const doctor = req.body.doctor;
     const attachment = req.file.filename;
-    const diagnostic = "unknown";
     const details = "";
+    console.log('examination start');
+    const diagnosis = await services.doExamination(req.file.path, name);
+    console.log('diagnosis:');
+    console.log(diagnosis);
 
-    const examination = new entities.Examination(name, doctor, date, attachment, diagnostic, details);
+    const examination = new entities.Examination(name, doctor, date, attachment, diagnosis, details);
+    console.log('examination:');
+    console.log(examination);
+
     res.locals.patient.examinations.push(examination);
-
     await database.engine.collection('patients').updateOne({ _id: res.locals.patient._id }, {
         $set:
         {
@@ -30,14 +35,8 @@ async function addExamination(req, res) {
     });
 
     const entity = await database.engine.collection('patients').findOne({ _id: res.locals.patient._id });
-
-    try {
-        const diagnosis = await services.doExamination(attachment, 'chest');
-    }
-    catch (err) {
-        console.log(err)
-    }
-
+    console.log('entity:');
+    console.log(entity);
     return res.send(entity);
 }
 

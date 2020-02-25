@@ -6,14 +6,19 @@ async function doExamination(attachment_path, type) {
     const form = new FormData();
     form.append('attachment', fs.createReadStream(attachment_path));
 
+    if (type == "1")
+        type = "skin"
+    else if (type == "2")
+        type = "lungs"
+
     const response = await axios({
         method: 'post',
-        url: 'http://localhost:5001/' + type,
+        url: 'http://mccarthy:5001/ai/' + type,
         data: form,
         headers: { 'content-type': `multipart/form-data; boundary=${form._boundary}` }
     });
 
-    return response;
+    return response.data.result;
 }
 
 
